@@ -1,4 +1,5 @@
 require "json"
+require "toml"
 
 DEBUG = false
 DEBUG = true if ENV.has_key?('DEBUG') && ENV['DEBUG'].downcase == "true"
@@ -36,6 +37,21 @@ def pandoc_rewrap(str)
   return output
 end
 
+def parse_exclusions_from_config_file
+  exclusions = [] of Regex
+
+  # read XDG_CONFIG_HOME
+  loc = File.expand_path("~/.config/branchsync/config.toml")
+  if File.exists?(File.expand_path(loc))
+    # worth adding some exception handling
+    file_contents = File.read(loc)
+    data = TOML.parse(file_contents)
+    exclusions = data["exclusions"]
+  end
+
+  exclusions.map { |i| Regex.new(i) }
+end
+
 def main
   current_pr = JSON.parse(`gh pr view --json body,title,baseRefName`)
   title = current_pr["title"].as_s
@@ -61,9 +77,14 @@ def main
     puts "Changed PR title"
   end
 
+  exclusions = parse_exclusions_from_config_file
   new_body = nil
   if rev.size > 2
-    body_unprocessed = rev[2..].join("\n").strip
+    body_lines = rev[2..]
+    body_lines.select! do |line|
+      line unless exclusions.any? { |excl| line =~ excl }
+    end
+    body_unprocessed = body_lines.join("\n").strip
     new_body = pandoc_rewrap(body_unprocessed)
   end
 

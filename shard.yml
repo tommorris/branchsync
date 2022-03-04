@@ -4,6 +4,10 @@ version: 0.1.0
 authors:
   - Tom Morris <tom@tommorris.org>
 
+dependencies:
+  toml:
+    github: crystal-community/toml.cr
+
 targets:
   branchsync:
     main: src/branchsync.cr
