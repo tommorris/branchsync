@@ -4,7 +4,12 @@ TODO: Write a description here
 
 ## Installation
 
-TODO: Write installation instructions here
+
+### Pre-requisites
+
+* `git`
+* `pandoc`
+* `gh`
 
 ## Usage
 
