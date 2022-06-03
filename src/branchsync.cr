@@ -56,6 +56,7 @@ def main
 
   new_title = rev[1].strip
   if new_title != title
+    GitHub::change_title(new_title)
     args << "-t '#{esc_squot(new_title)}'"
     `gh pr edit -t '#{esc_squot(new_title)}'`
     puts "Changed PR title"

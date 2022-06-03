@@ -9,4 +9,8 @@ module GitHub
 
     return { current_pr, title, body, base }
   end
+
+  def change_title(new_title)
+    `gh pr edit -t '#{esc_squot(new_title)}'`
+  end
 end
