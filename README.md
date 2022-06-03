@@ -50,6 +50,8 @@ but also compiles down to a single binary.
 
 There are lots of things to do. For instance:
 
+- tests
+- CI and cross-compile
 - refactor to support multiple providers (e.g. GitLab)
 - auto-strip [trailers](https://git-scm.com/docs/git-interpret-trailers)
   like `Co-authored-by` and `Signed-off-by` (either all of them, or known ones)
