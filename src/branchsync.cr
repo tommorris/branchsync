@@ -1,7 +1,7 @@
 require "json"
 
 DEBUG = false
-DEBUG = true if ENV.has_key?('DEBUG') && ENV['DEBUG'].downcase == "true"
+DEBUG = true if ENV.has_key?("DEBUG") && ENV["DEBUG"].downcase == "true"
 
 def esc_squot(str : String)
   str = str.to_s
